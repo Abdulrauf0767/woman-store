@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchTerm,clearSearch } from '../Features/CardDataSlice';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchbar, setIsSearchbar] = useState(false);
+  const [localSearchTerm, setLocalSearchTerm] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const wishlistCount = useSelector((state) => state.product.wishlist.length);
   const addtocartCount = useSelector((state) => state.product.addtocart.length);
-    const [isSearchbar , setisSearchbar] = useState(false) ;
-    let handleSearchbar = () => {
-        setisSearchbar(!isSearchbar)
+  const searchTerm = useSelector((state) => state.product.searchTerm);
+
+  const handleSearchbar = () => {
+    setIsSearchbar(!isSearchbar);
+    if (isSearchbar) {
+      dispatch(clearSearch());
+      setLocalSearchTerm('');
     }
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setLocalSearchTerm(value);
+    dispatch(setSearchTerm(value));
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate('/search-results');
+      setIsSearchbar(false);
+    }
+  };
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -24,9 +50,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="container mx-auto w-[90%]">
-        
         <div className="flex items-center justify-between">
-          
           <button
             className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
             onClick={toggleMobileMenu}
@@ -67,14 +91,16 @@ const Header = () => {
             </ul>
           </nav>
 
-          <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 ">
+          <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
             <h1 className="text-2xl font-light tracking-tight">Cloth Center</h1>
           </div>
-          <div className="flex items-center space-x-1  ">
+          
+          <div className="flex items-center space-x-1">
             <button
               type="button"
               className="p-2 text-gray-700 hover:text-primary transition-colors"
               aria-label="Search"
+              onClick={handleSearchbar}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +109,6 @@ const Header = () => {
                 strokeWidth={1.5}
                 stroke="currentColor"
                 className="w-5 h-5"
-                onClick={() => handleSearchbar()}
               >
                 <path
                   strokeLinecap="round"
@@ -93,7 +118,8 @@ const Header = () => {
               </svg>
             </button>
 
-            <NavLink to={'/login'}
+            <NavLink 
+              to={'/login'}
               type="button"
               className="p-2 text-gray-700 hover:text-primary transition-colors"
               aria-label="Account"
@@ -173,26 +199,38 @@ const Header = () => {
         </div>
 
         {isSearchbar && (
-            <form action="" className="w-[90%] mx-auto h-16 flex items-center relative top-6">
-                <div className="w-full h-12 border-2 border-gray-200 rounded-2xl overflow-hidden">
-                <input 
-                    type="search" 
-                    name="search" 
-                    id="search" 
-                    className="w-full h-full px-4 outline-none"
-                    placeholder="Search..."
+          <form onSubmit={handleSearchSubmit} className="w-[90%] mx-auto h-16 flex items-center relative top-6">
+            <div className="w-full h-12 border-2 border-gray-200 rounded-2xl overflow-hidden">
+              <input
+                type="search"
+                name="search"
+                id="search"
+                className="w-full h-full px-4 outline-none"
+                placeholder="Search..."
+                value={localSearchTerm}
+                onChange={handleSearchChange}
+                autoFocus
+              />
+            </div>
+            <button type="submit">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                strokeWidth="1.5" 
+                stroke="currentColor" 
+                className="size-5 absolute top-6 right-3 text-gray-500"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" 
                 />
-                </div>
-                <button type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-5 absolute top-6 right-3 text-gray-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                </svg>
+              </svg>
+            </button>
+          </form>
+        )}
 
-                </button>
-            </form>
-            )}
-
-        
         {isMobileMenuOpen && (
           <div className="lg:hidden mt-4 pb-4">
             <ul className="flex flex-col space-y-3">

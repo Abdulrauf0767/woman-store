@@ -19,18 +19,19 @@ export const dataFetch = createAsyncThunk(
   'product/fetchProducts',
   async () => {
     const res = await fetch("https://fakestoreapi.com/products/category/women's clothing");
-    let data = await res.json() ;
-    return data ;
+    let data = await res.json();
+    return data;
   }
 );
-
 
 const initialState = {
   status: 'idle',
   list: loadFromLocalStorage('product_list', []),
+  filteredList: [], // Add filteredList to store search results
   selectedProduct: null,
   wishlist: loadFromLocalStorage('wishlist', []),
   addtocart: loadFromLocalStorage('addtocart', []),
+  searchTerm: '',
   error: null
 };
 
@@ -83,6 +84,20 @@ const CardDataSlice = createSlice({
     clearCart: (state) => {
       state.addtocart = [];
       saveToLocalStorage('addtocart', []);
+    },
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
+      if (action.payload.trim() === '') {
+        state.filteredList = [];
+      } else {
+        state.filteredList = state.list.filter(product =>
+          product.title.toLowerCase().includes(action.payload.toLowerCase())
+        );
+      }
+    },
+    clearSearch: (state) => {
+      state.searchTerm = '';
+      state.filteredList = [];
     }
   },
   extraReducers: (builder) => {
@@ -110,7 +125,9 @@ export const {
   removeFromCart,
   incrementQuantity,
   decrementQuantity,
-  clearCart
+  clearCart,
+  setSearchTerm,
+  clearSearch
 } = CardDataSlice.actions;
 
 export default CardDataSlice.reducer;

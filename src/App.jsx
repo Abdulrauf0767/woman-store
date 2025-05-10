@@ -6,6 +6,7 @@ import Wishlist from './Components/Wishlist';
 import AddToCart from './Components/AddToCart';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
+import SearchResults from './Components/SearchResults';
 const App = () => {
   return (
     <div>
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/addtocart' element = {<AddToCart/>} />
         <Route path='/login' element = {<Login/>} />
         <Route path='/signup' element = {<Signup/>} />
+        <Route path='/search-results' element = {<SearchResults/>} />
       </Routes>
     </div>
   )
