@@ -29,7 +29,7 @@ const Cards = () => {
 
   return (
     <>
-    <div className='w-[90%] mx-auto flex flex-wrap gap-6 mt-32 justify-center'>
+    <div className='w-[90%] mx-auto flex flex-wrap gap-6 md:mt-32 mt-20 justify-center'>
       {products.map((product) => (
         <CardComponent key={product.id} product={product} />
       ))}
