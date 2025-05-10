@@ -36,7 +36,7 @@ const Slider = () => {
         {images.map((_, index) => (
           <div
             key={index}
-            className={`w-5 h-5 rounded-full cursor-pointer ${
+            className={`md:w-5 md:h-5 w-2 h-2 rounded-full cursor-pointer ${
               currentIndex === index ? 'bg-green-500' : 'bg-gray-300'
             }`}
             onClick={() => handleImages(index)}
