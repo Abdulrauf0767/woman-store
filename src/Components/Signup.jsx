@@ -1,21 +1,24 @@
-// src/components/SignupForm.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import background from '/Images/woman-img-02.jpg'
+import background from '/Images/woman-img-02.jpg';
+
 const Signup = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100"
-    style={{
-            backgroundImage: `url(${background})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat' ,
-          }}
-          >
-      <div className="bg-white p-8 rounded-lg shadow-md w-[90%] justify-self-center max-w-md">
+    <div
+      className="relative min-h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      
+      <div className="absolute inset-0 bg-black/25 backdrop-blur-sm z-0" />
+
+      <div className="relative z-10 bg-white bg-opacity-90 p-8 rounded-lg shadow-md w-[90%] max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6">SIGN UP</h1>
-        
-        
+
         <form>
           <div className="mb-4">
             <label htmlFor="username" className="block text-gray-700 mb-2">Username</label>
@@ -26,7 +29,7 @@ const Signup = () => {
               placeholder="Choose a username"
             />
           </div>
-          
+
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">Email</label>
             <input
@@ -36,7 +39,7 @@ const Signup = () => {
               placeholder="Enter your email"
             />
           </div>
-          
+
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700 mb-2">Password</label>
             <input
@@ -46,8 +49,8 @@ const Signup = () => {
               placeholder="Create a password"
             />
           </div>
-          
-          <div className="mb-4">
+
+          <div className="mb-6">
             <label htmlFor="confirmPassword" className="block text-gray-700 mb-2">Confirm Password</label>
             <input
               type="password"
@@ -56,7 +59,7 @@ const Signup = () => {
               placeholder="Confirm your password"
             />
           </div>
-          
+
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
@@ -64,11 +67,13 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
-        
+
         <div className="mt-4 text-center">
           <p className="text-gray-600">
             Already have an account?{' '}
-            <NavLink to={'/login'} className="text-blue-600 hover:text-blue-800">Login</NavLink>
+            <NavLink to="/login" className="text-blue-600 hover:text-blue-800">
+              Login
+            </NavLink>
           </p>
         </div>
       </div>
