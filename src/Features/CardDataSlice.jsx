@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const loadFromLocalStorage = (key, fallback) => {
   try {
@@ -19,8 +18,9 @@ const saveToLocalStorage = (key, data) => {
 export const dataFetch = createAsyncThunk(
   'product/fetchProducts',
   async () => {
-    const res = await axios.get("https://fakestoreapi.com/products/category/women's clothing");
-    return res.data;
+    const res = await fetch("https://fakestoreapi.com/products/category/women's clothing");
+    let data = await res.json() ;
+    return data ;
   }
 );
 
