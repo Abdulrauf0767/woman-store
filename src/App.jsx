@@ -7,6 +7,12 @@ import AddToCart from './Components/AddToCart';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import SearchResults from './Components/SearchResults';
+import Woman from './Pages/Woman';
+import Man from './Pages/Man';
+import Child from './Pages/Child';
+import Brands from './Pages/Brands';
+import Admin from './Pages/Admin';
+import ShopOwner from './Pages/ShopOwner';
 const App = () => {
   return (
     <div>
@@ -18,6 +24,12 @@ const App = () => {
         <Route path='/login' element = {<Login/>} />
         <Route path='/signup' element = {<Signup/>} />
         <Route path='/search-results' element = {<SearchResults/>} />
+        <Route path='/woman' element = {<Woman/>} />
+        <Route path='/man' element = {<Man/>} />
+        <Route path='/child' element = {<Child/>} />
+        <Route path='/brands' element = {<Brands/>} />
+        <Route path='/admin' element = {<Admin/>} />
+        <Route path='/shopowner' element = {<ShopOwner/>} />
       </Routes>
     </div>
   )
