@@ -1,32 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Header from "../Components/Header";
 import { useParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, findProductById } from "../Features/CardDataSlice";
+import { addToCart, findProductById, addToWishlist } from "../Features/CardDataSlice";
 import { useNavigate } from "react-router-dom";
-import { addToWishlist } from '../Features/CardDataSlice';
+import gsap from "gsap";
 
 const CardDetail = () => {
     const { id } = useParams();
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    
+    const [isZoomVisible, setIsZoomVisible] = useState(false);
+    const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+    const zoomImgRef = useRef(null);
+
     const selectedProduct = useSelector((state) => state.cardData.selectedProduct);
     const products = useSelector((state) => state.cardData.list);
     const jsonProducts = useSelector((state) => state.cardData.categoryList?.productList || []);
     
-    
     const productFromState = location.state?.productData;
-    
-    
+
     const product = selectedProduct || productFromState || 
                    products.find(p => p.id.toString() === id) || 
                    jsonProducts.find(item => item.id.toString() === id);
 
     useEffect(() => {
-       
         if (!productFromState && !selectedProduct) {
             dispatch(findProductById(Number(id)));
         }
@@ -57,17 +56,37 @@ const CardDetail = () => {
         dispatch(addToCart(product));
     };
 
+    const handleMouseMove = (e) => {
+        const bounds = e.currentTarget.getBoundingClientRect();
+        const x = ((e.clientX - bounds.left) / bounds.width) * 100;
+        const y = ((e.clientY - bounds.top) / bounds.height) * 100;
+        setZoomPosition({ x, y });
+
+        if (zoomImgRef.current) {
+            gsap.to(zoomImgRef.current, {
+                backgroundPosition: `${x}% ${y}%`,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        }
+    };
+
     return (
         <div>
             <Header />
             <div className='w-[80%] mx-auto mt-24 flex flex-col md:flex-row items-start gap-x-32 justify-center'>
                 
                 <div className='md:w-[50%] w-full flex flex-col'>
-                    <div className='w-full h-[500px] shadow-md rounded-xl flex items-center justify-center bg-white'>
+                    <div
+                        className='w-full h-[500px] shadow-md rounded-xl flex items-center justify-center bg-white relative overflow-hidden'
+                        onMouseEnter={() => setIsZoomVisible(true)}
+                        onMouseLeave={() => setIsZoomVisible(false)}
+                        onMouseMove={handleMouseMove}
+                    >
                         <img 
                             src={product.image || '/placeholder-image.jpg'} 
                             alt={product.title}
-                            className='max-w-[100%] max-h-[100%] object-contain'
+                            className='max-w-[100%] max-h-[100%] object-contain z-10'
                             onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = '/placeholder-image.jpg';
@@ -76,7 +95,6 @@ const CardDetail = () => {
                     </div>
                 </div>
 
-                
                 <div className='md:w-[40%] w-full flex flex-col items-start gap-y-5'>
                     <h2 className='text-xl font-title font-medium w-full'>{product.title}</h2>
                     {product.brand && (
@@ -88,8 +106,7 @@ const CardDetail = () => {
                     <p className='font-title font-[250] text-md text-justify leading-normal'>
                         {product.description || 'No description available'}
                     </p>
-                    
-                   
+
                     <div className='flex flex-col items-start gap-y-5'>
                         <h4 className='text-xl font-title'>Size</h4>
                         <div className='flex items-center gap-x-4 w-full'>
@@ -103,8 +120,7 @@ const CardDetail = () => {
                                 </button>
                             ))}
                         </div>
-                        
-                       
+
                         <div className='w-full flex flex-col gap-y-5 mt-6'>
                             <button 
                                 type="button" 
@@ -124,6 +140,22 @@ const CardDetail = () => {
                     </div>
                 </div>
             </div>
+
+          
+            {isZoomVisible && (
+                <div className='md:w-[40%] w-[50%] mx-auto top-[10%] right-[5%] absolute bg-white md:top-[23%] md:right-[6%] h-[200px] md:h-[500px] rounded-lg border shadow-lg overflow-hidden z-50'>
+                    <div
+                        ref={zoomImgRef}
+                        className='w-full h-full'
+                        style={{
+                            backgroundImage: `url(${product.image})`,
+                            backgroundSize: '200%',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+                        }}
+                    />
+                </div>
+            )}
         </div>
     );
 };
