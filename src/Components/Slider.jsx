@@ -6,11 +6,11 @@ const Slider = () => {
     "/Images/woman-img-02.jpg",
     "/Images/woman-img.jpg",
   ];
-  const [currentIndex, setcurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setcurrentIndex((prevIndex) =>
+      setCurrentIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
@@ -19,20 +19,26 @@ const Slider = () => {
   }, [images.length]);
 
   const handleImages = (index) => {
-    setcurrentIndex(index);
+    setCurrentIndex(index);
   };
 
   return (
-    <div className='relative w-[90%] mx-auto mt-10'>
-      <div className='md:h-[40vw] h-[60vw] '>
-        <img
-          src={images[currentIndex]}
-          alt={`slide-${currentIndex}`}
-          className='w-full md:h-[40vw] h-[60vw] object-cover transition-all duration-500 '
-        />
+    <div className="relative overflow-hidden w-[90%] mx-auto mt-10">
+      <div
+        className="flex transition-transform duration-700 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {images.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`slide-${index}`}
+            className="w-full md:h-[40vw] h-[60vw] object-cover flex-shrink-0"
+          />
+        ))}
       </div>
 
-      <div className='absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-x-3'>
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-x-3">
         {images.map((_, index) => (
           <div
             key={index}
