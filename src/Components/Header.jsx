@@ -55,7 +55,7 @@ const Header = () => {
  
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 bg-white ">
       <div className="container mx-auto w-[90%]">
         <div className="flex items-center justify-between">
           <button
@@ -240,6 +240,7 @@ const Header = () => {
           </div>
         )}
       </div>
+      <hr className='w-[90%] mx-auto'/>
     </header>
   );
 };
