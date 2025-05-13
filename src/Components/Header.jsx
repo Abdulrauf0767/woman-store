@@ -232,10 +232,10 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden mt-4 pb-4">
             <ul className="flex flex-col space-y-3">
-              <li className='font-title font-[250] text-sm uppercase'>Women</li>
-             <li className='font-title font-[250] text-sm uppercase'>Men</li>
-             <li className='font-title font-[250] text-sm uppercase'>Kids</li>
-             <li className='font-title font-[250] text-sm uppercase'>Brands</li>
+              <li onClick={handleWomen} className='font-title font-[250] text-sm uppercase cursor-pointer '>Women</li>
+             <li onClick={handlemen} className='font-title font-[250] text-sm uppercase cursor-pointer '>Men</li>
+             <li onClick={handlechild} className='font-title font-[250] text-sm uppercase cursor-pointer '>Kids</li>
+             <li onClick={handleBrand}  className='font-title font-[250] text-sm uppercase cursor-pointer '>Brands</li>
             </ul>
           </div>
         )}
