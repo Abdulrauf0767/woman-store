@@ -105,15 +105,20 @@ const CardDataSlice = createSlice({
       saveToLocalStorage('addtocart', []);
     },
     setSearchTerm: (state, action) => {
-      state.searchTerm = action.payload;
-      if (action.payload.trim() === '') {
-        state.filteredList = [];
-      } else {
-        state.filteredList = state.list.filter(product =>
-          product.title.toLowerCase().includes(action.payload.toLowerCase())
-        );
-      }
-    },
+  state.searchTerm = action.payload;
+  if (action.payload.trim() === '') {
+    state.filteredList = [];
+  } else {
+    const searchIn = state.categoryList.productList.length > 0 
+      ? state.categoryList.productList 
+      : state.list;
+
+    state.filteredList = searchIn.filter(product =>
+      product.title.toLowerCase().includes(action.payload.toLowerCase())
+    );
+  }
+},
+
     clearSearch: (state) => {
       state.searchTerm = '';
       state.filteredList = [];

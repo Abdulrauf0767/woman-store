@@ -90,7 +90,7 @@ const Header = () => {
           </nav>
 
           <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
-            <h1 className="text-2xl font-light tracking-tight">Cloth Center</h1>
+            <NavLink to={'/'} className="text-2xl font-light tracking-tight cursor-pointer ">Cloth Center</NavLink>
           </div>
           
           <div className="flex items-center space-x-1">

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const SearchResults = () => {
-  const { filteredList, searchTerm } = useSelector((state) => state.product);
+  const { filteredList, searchTerm } = useSelector((state) => state.cardData);
 
   return (
     <div className="container mx-auto w-[90%]">

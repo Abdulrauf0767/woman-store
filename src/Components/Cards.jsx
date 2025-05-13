@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { dataFetch } from '../Features/CardDataSlice';
+import { categoryData, dataFetch } from '../Features/CardDataSlice';
 import CardComponent from './CardComponent';
 
 const Cards = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cardData.list);
+  const jsonData = useSelector((state) => state.cardData.categoryList?.productList || []);
   const status = useSelector((state) => state.cardData.status);
   const error = useSelector((state) => state.cardData.error);
 
   useEffect(() => {
     if (status === 'idle') { 
       dispatch(dataFetch());
+      dispatch(categoryData());
       
     }
   }, [status, dispatch]);
@@ -32,6 +34,9 @@ const Cards = () => {
     <>
     <div className='w-[90%] mx-auto flex flex-wrap gap-6 md:mt-32 mt-20 justify-center'>
       {products.map((product) => (
+        <CardComponent key={product.id} product={product} />
+      ))}
+      {jsonData.map((product) => (
         <CardComponent key={product.id} product={product} />
       ))}
     </div>
