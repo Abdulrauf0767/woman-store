@@ -11,10 +11,9 @@ const Cards = () => {
   const error = useSelector((state) => state.cardData.error);
 
   useEffect(() => {
-    if (status === 'idle') { 
+    if (status === 'idle') {
       dispatch(dataFetch());
       dispatch(categoryData());
-      
     }
   }, [status, dispatch]);
 
@@ -26,22 +25,22 @@ const Cards = () => {
     return <p className="text-center text-red-500">Error: {error}</p>;
   }
 
-  if (!products || !Array.isArray(products)) {
+  if ((!products || !Array.isArray(products)) && (!jsonData || !Array.isArray(jsonData))) {
     return <p className="text-center">No products found</p>;
   }
 
   return (
     <>
-    <div className='w-[90%] mx-auto flex flex-wrap gap-6 md:mt-32 mt-20 justify-center'>
-      {products.map((product) => (
-        <CardComponent key={product.id} product={product} />
-      ))}
-      {jsonData.map((product) => (
-        <CardComponent key={product.id} product={product} />
-      ))}
-    </div>
-    <hr className='w-[90%] mx-auto mt-20 ' />
-      </>
+      <div className='w-[90%] mx-auto flex flex-wrap gap-6 md:mt-32 mt-20 justify-center'>
+        {products.map((product) => (
+          <CardComponent key={product.id} product={product} />
+        ))}
+        {jsonData.map((item) => (
+          <CardComponent key={item.id} item={item} />
+        ))}
+      </div>
+      <hr className='w-[90%] mx-auto mt-20 ' />
+    </>
   );
 };
 
