@@ -8,7 +8,7 @@ import {
 } from '../Features/CardDataSlice';
 
 const AddToCart = () => {
-  const cart = useSelector((state) => state.product.addtocart); 
+  const cart = useSelector((state) => state.cardData.addtocart); 
   const dispatch = useDispatch();
 
   const calculateTotal = () => {

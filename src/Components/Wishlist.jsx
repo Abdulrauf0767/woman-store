@@ -5,7 +5,7 @@ import { removeFromWishlist } from '../Features/CardDataSlice';
 
 const Wishlist = () => {
   const dispatch = useDispatch();
-  const { wishlist } = useSelector((state) => state.product);
+  const { wishlist } = useSelector((state) => state.cardData);
   const handleRemoveFromWishlist = (id) => {
     dispatch(removeFromWishlist(id));
   };

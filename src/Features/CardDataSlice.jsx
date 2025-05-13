@@ -24,10 +24,29 @@ export const dataFetch = createAsyncThunk(
   }
 );
 
+export const  categoryData = createAsyncThunk(
+  'category/fetchCategory' ,
+  async () => {
+    const res = await fetch('/Products.json') ;
+    let data = await res.json();
+    if (Array.isArray(data)) {
+      return data;
+    } else if (data && Array.isArray(data.products)) {
+      return data.products;
+    }
+    
+    throw new Error('Invalid data format');
+  }
+)
 const initialState = {
   status: 'idle',
   list: loadFromLocalStorage('product_list', []),
-  filteredList: [], // Add filteredList to store search results
+  filteredList: [],
+  categoryList: {
+    productList: [],
+    status: 'idle',
+    error: null
+  },
   selectedProduct: null,
   wishlist: loadFromLocalStorage('wishlist', []),
   addtocart: loadFromLocalStorage('addtocart', []),
@@ -113,7 +132,25 @@ const CardDataSlice = createSlice({
       .addCase(dataFetch.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      });
+      })
+      .addCase(categoryData.pending ,(state) => {
+        state.categoryList.status = 'pending' ;
+      })
+      .addCase(categoryData.fulfilled, (state, action) => {
+        state.categoryList.status = 'succeeded';
+        
+        state.categoryList.productList = Array.isArray(action.payload) 
+          ? action.payload  
+          : action.payload.products || [];  
+        
+        state.list = state.categoryList.productList;
+        saveToLocalStorage('product_list', state.list);
+      })
+      .addCase(categoryData.rejected , (state , action) => {
+        state.categoryList.status = 'rejected'
+        state.categoryList.error = action.error.message ;
+      })
+      
   }
 });
 

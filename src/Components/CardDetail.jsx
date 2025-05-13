@@ -9,7 +9,7 @@ const CardDetail = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
-    const selectedProduct = useSelector((state) => state.product.selectedProduct);
+    const selectedProduct = useSelector((state) => state.cardData.selectedProduct);
 
     useEffect(() => {
         dispatch(findProductById(Number(id)));
@@ -37,7 +37,7 @@ const CardDetail = () => {
                         <img 
                             src={selectedProduct.image} 
                             alt={selectedProduct.title}
-                            className='max-w-[80%] max-h-[80%] object-contain'
+                            className='max-w-[100%] max-h-[100%] object-contain'
                         />
                     </div>
                     
@@ -49,6 +49,7 @@ const CardDetail = () => {
                
                 <div className='md:w-[40%] w-full flex flex-col items-start gap-y-5'>
                     <h2 className='text-xl font-title font-medium w-full'>{selectedProduct.title}</h2>
+                    <h3 className=' font-title font-medium w-full flex items-center gap-x-5 text-sm text-black '> Brand  <p className='text-[#d72a25] font-title'>{selectedProduct.brand}</p></h3>
                     <p className='text-red-500'>${selectedProduct.price}</p>
                     <p className='font-title font-[250] text-md text-justify leading-normal'>{selectedProduct.description}</p>
                     <div className='flex flex-col items-start gap-y-5'>

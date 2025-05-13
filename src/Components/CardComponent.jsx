@@ -8,11 +8,12 @@ const CardComponent = ({ product }) => {
       <NavLink to={`/carddetails/${product.id}`} className='w-full h-full flex flex-col items-start justify-between'>
         <div className='w-full h-[75%] flex items-center justify-center'>
           <img 
-            src={product.image} 
-            className='max-w-full max-h-full object-cover' 
-            alt={product.title}
+            src={product.image && product.image.trim() !== '' ? product.image : fallbackImage}
+            className='max-w-full max-h-full object-contain' 
+            alt={product.title || 'Product image'}
             onError={(e) => {
-              e.target.src = 'path/to/fallback/image.jpg';
+              e.target.onerror = null; 
+              e.target.src = fallbackImage;
             }}
           />
         </div>  

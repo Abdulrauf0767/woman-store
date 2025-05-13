@@ -10,9 +10,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const wishlistCount = useSelector((state) => state.product.wishlist.length);
-  const addtocartCount = useSelector((state) => state.product.addtocart.length);
-  const searchTerm = useSelector((state) => state.product.searchTerm);
+  
+  const wishlistCount = useSelector((state) => state.cardData.wishlist.length);
+  const addtocartCount = useSelector((state) => state.cardData.addtocart.length);
+  const searchTerm = useSelector((state) => state.cardData.searchTerm);
 
   const handleSearchbar = () => {
     setIsSearchbar(!isSearchbar);
@@ -21,7 +22,18 @@ const Header = () => {
       setLocalSearchTerm('');
     }
   };
-
+  const handleWomen = () => {
+    navigate('/woman')
+  }
+  const handlemen = () => {
+    navigate('/man')
+  }
+  const handlechild = () => {
+    navigate('/child')
+  }
+  const handleBrand = () => {
+    navigate('/brands')
+  }
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setLocalSearchTerm(value);
@@ -40,12 +52,7 @@ const Header = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const navLinks = [
-    { name: 'Women' },
-    { name: 'Men' },
-    { name: 'Kids' },
-    { name: 'Brands' },
-  ];
+ 
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
@@ -74,20 +81,11 @@ const Header = () => {
 
           <nav className="hidden lg:flex lg:items-center lg:space-x-8 lg:w-auto">
             <ul className="flex space-x-8">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <NavLink
-                    to={link.path}
-                    className={({ isActive }) =>
-                      `text-sm font-[280] font-title uppercase tracking-wide transition-colors hover:text-primary ${
-                        isActive ? 'text-primary' : 'text-gray-700'
-                      }`
-                    }
-                  >
-                    {link.name}
-                  </NavLink>
-                </li>
-              ))}
+             <li onClick={handleWomen} className='font-title font-[250] text-sm uppercase cursor-pointer '>Women</li>
+             <li onClick={handlemen} className='font-title font-[250] text-sm uppercase cursor-pointer '>Men</li>
+             <li onClick={handlechild} className='font-title font-[250] text-sm uppercase cursor-pointer '>Kids</li>
+             <li onClick={handleBrand}  className='font-title font-[250] text-sm uppercase cursor-pointer '>Brands</li>
+              
             </ul>
           </nav>
 
@@ -234,21 +232,10 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden mt-4 pb-4">
             <ul className="flex flex-col space-y-3">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <NavLink
-                    to={link.path}
-                    className={({ isActive }) =>
-                      `block py-2 text-sm font-medium uppercase tracking-wide transition-colors hover:text-primary ${
-                        isActive ? 'text-primary' : 'text-gray-700'
-                      }`
-                    }
-                    onClick={toggleMobileMenu}
-                  >
-                    {link.name}
-                  </NavLink>
-                </li>
-              ))}
+              <li className='font-title font-[250] text-sm uppercase'>Women</li>
+             <li className='font-title font-[250] text-sm uppercase'>Men</li>
+             <li className='font-title font-[250] text-sm uppercase'>Kids</li>
+             <li className='font-title font-[250] text-sm uppercase'>Brands</li>
             </ul>
           </div>
         )}

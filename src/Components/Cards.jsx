@@ -5,13 +5,14 @@ import CardComponent from './CardComponent';
 
 const Cards = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.list);
-  const status = useSelector((state) => state.product.status);
-  const error = useSelector((state) => state.product.error);
+  const products = useSelector((state) => state.cardData.list);
+  const status = useSelector((state) => state.cardData.status);
+  const error = useSelector((state) => state.cardData.error);
 
   useEffect(() => {
     if (status === 'idle') { 
       dispatch(dataFetch());
+      
     }
   }, [status, dispatch]);
 
