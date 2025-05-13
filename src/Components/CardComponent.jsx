@@ -9,7 +9,7 @@ const CardComponent = ({ product }) => {
         <div className='w-full h-[75%] flex items-center justify-center'>
           <img 
             src={product.image && product.image.trim() !== '' ? product.image : fallbackImage}
-            className='max-w-full max-h-full object-contain' 
+            className='max-w-full max-h-full object-contain rounded-xl' 
             alt={product.title || 'Product image'}
             onError={(e) => {
               e.target.onerror = null; 
