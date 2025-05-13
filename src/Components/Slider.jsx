@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Slider = () => {
   const images = [
@@ -8,6 +10,10 @@ const Slider = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,7 +30,10 @@ const Slider = () => {
   };
 
   return (
-    <div className="relative w-[90%] mx-auto mt-10 overflow-hidden">
+    <div
+      className="relative w-[90%] mx-auto mt-10 overflow-hidden"
+      data-aos="fade-up"
+    >
       <div className="relative md:h-[40vw] h-[60vw]">
         {images.map((img, index) => (
           <img
