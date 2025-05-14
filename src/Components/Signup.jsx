@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import background from '/Images/woman-img-02.jpg';
 import { validation } from '../Validations/Validation';
-import { useFormik } from 'formik';
-import { Eye, EyeOff } from 'lucide-react'; // optional icon import
+import { useFormik } from "formik";
+import { Eye, EyeOff } from 'lucide-react'; 
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
