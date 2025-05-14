@@ -1,33 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import background from '/Images/woman-img-02.jpg';
+import { validation } from '../Validations/Validation';
 import { useFormik } from 'formik';
-import {validation} from '../Validations/Validation'
-import { useState } from 'react';
-const Signup = () => {
-  const [isText, setisText] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+import { Eye, EyeOff } from 'lucide-react'; // optional icon import
 
-  const { values, touched, handleChange, handleSubmit, errors, handleBlur, handleReset } = useFormik({
+const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
+  };
+
+  const {
+    values,
+    touched,
+    handleChange,
+    handleSubmit,
+    errors,
+    handleBlur,
+    handleReset
+  } = useFormik({
     initialValues: {
-      f_name: "",
-      l_name: "",
-      email: "",
-      password: "",
-      c_password: ""
+      f_name: '',
+      email: '',
+      password: '',
+      c_password: ''
     },
     validationSchema: validation,
     onSubmit: (values) => {
       console.log(values);
-      setSuccessMessage("Your account created successfully ✅");
+      setSuccessMessage('Your account created successfully ✅');
       handleReset();
-      setTimeout(() => setSuccessMessage(""), 3000);
+      setTimeout(() => setSuccessMessage(''), 3000);
     }
   });
 
-  const handleLock = () => {
-    setisText(prev => !prev);
-  };
   return (
     <div
       className="relative min-h-screen flex items-center justify-center"
@@ -38,143 +47,124 @@ const Signup = () => {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      
-      <div className="absolute inset-0 bg-black/25 backdrop-blur-sm z-0" />
-       <div className='w-full min-h-screen flex flex-col items-center justify-center relative px-4 py-10'>
-      
-      {/* Success Message */}
       {successMessage && (
-        <div className="absolute top-5 px-6 py-3 bg-green-500 text-white font-semibold rounded shadow text-sm md:text-base">
+        <div className="absolute top-5 px-6 py-3 bg-green-500 text-white font-semibold rounded shadow text-sm md:text-base z-50">
           {successMessage}
         </div>
       )}
+      <div className="absolute inset-0 bg-black/25 backdrop-blur-sm z-0" />
 
-      <form onSubmit={handleSubmit} className='w-full max-w-5xl bg-white/80 rounded-lg shadow-lg flex flex-col md:flex-row items-stretch p-0 overflow-hidden'>
-        {/* Image Container - full height on large screens */}
-        <div className='w-full md:w-[45%] min-h-[300px] md:min-h-[600px] flex items-center justify-center  p-2'>
-          <img 
-            src={'https://images.pexels.com/photos/317356/pexels-photo-317356.jpeg?auto=compress&cs=tinysrgb&w=600'} 
-            alt="Signup" 
-            className=' max-w-full h-full object-center object-cover rounded-lg ' 
-          />
-        </div>
+      <div className="relative z-10 bg-white bg-opacity-90 p-8 rounded-lg shadow-md w-[90%] max-w-md">
+        <h1 className="text-3xl font-bold text-center mb-6">SIGN UP</h1>
 
-        {/* Form Fields Container */}
-        <div className='w-full md:w-[55%] flex flex-col gap-4 p-6 md:p-8'>
-          <h1 className='font-bold text-2xl text-center'>Create Account</h1>
-
-          {/* First Name */}
-          <div className='flex flex-col gap-y-1 relative'>
-            <label htmlFor="f_name">First Name</label>
-            <input 
-              type="text" 
-              name="f_name" 
-              id="f_name" 
-              placeholder='First Name'
-              className='w-full border border-black h-10 rounded-md p-2'
-              value={values.f_name} 
-              onChange={handleChange} 
-              onBlur={handleBlur} 
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Username */}
+          <div>
+            <label htmlFor="f_name" className="block text-gray-700 mb-1">Username</label>
+            <input
+              type="text"
+              id="f_name"
+              name="f_name"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              placeholder="Choose a username"
+              value={values.f_name}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.f_name && touched.f_name && <p className='text-red-500 text-sm absolute -bottom-5'>{errors.f_name}</p>}
-          </div>
-
-          {/* Last Name */}
-          <div className='flex flex-col gap-y-1 relative'>
-            <label htmlFor="l_name">Last Name</label>
-            <input 
-              type="text" 
-              name="l_name" 
-              id="l_name" 
-              placeholder='Last Name'
-              className='w-full border border-black h-10 rounded-md p-2'
-              value={values.l_name} 
-              onChange={handleChange} 
-              onBlur={handleBlur} 
-            />
-            {errors.l_name && touched.l_name && <p className='text-red-500 text-sm absolute -bottom-5'>{errors.l_name}</p>}
+            {errors.f_name && touched.f_name && (
+              <p className="text-red-500 text-sm mt-1">{errors.f_name}</p>
+            )}
           </div>
 
           {/* Email */}
-          <div className='flex flex-col gap-y-1 relative'>
-            <label htmlFor="email">Email</label>
-            <input 
-              type="email" 
-              name="email" 
-              id="email" 
-              placeholder='Email'
-              className='w-full border border-black h-10 rounded-md p-2'
-              value={values.email} 
-              onChange={handleChange} 
-              onBlur={handleBlur} 
+          <div>
+            <label htmlFor="email" className="block text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
-            {errors.email && touched.email && <p className='text-red-500 text-sm absolute -bottom-5'>{errors.email}</p>}
+            {errors.email && touched.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* Password */}
-          <div className='flex flex-col gap-y-1 relative'>
-            <label htmlFor="password">Password</label>
-            <div className='relative'>
-              <input 
-                type={isText ? 'text' : 'password'} 
-                name="password" 
-                id="password" 
-                placeholder='Password'
-                className='w-full border border-black h-10 rounded-md p-2 pr-8'
-                value={values.password} 
-                onChange={handleChange} 
-                onBlur={handleBlur} 
+          <div>
+            <label htmlFor="password" className="block text-gray-700 mb-1">Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                name="password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 pr-10"
+                placeholder="Create a password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
-              <button 
-                type="button" 
-                onClick={handleLock} 
-                className='absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer'
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-2.5 text-gray-500 cursor-pointer"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75M6.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-              </button>
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </span>
             </div>
-            {errors.password && touched.password && <p className='text-red-500 text-xs absolute -bottom-5'>{errors.password}</p>}
+            {errors.password && touched.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
           {/* Confirm Password */}
-          <div className='flex flex-col gap-y-1 relative'>
-            <label htmlFor="c_password">Confirm Password</label>
-            <div className='relative'>
-              <input 
-                type={isText ? 'text' : 'password'} 
-                name="c_password" 
-                id="c_password" 
-                placeholder='Confirm Password'
-                className='w-full border border-black h-10 rounded-md p-2 pr-8'
-                value={values.c_password} 
-                onChange={handleChange} 
-                onBlur={handleBlur} 
+          <div>
+            <label htmlFor="c_password" className="block text-gray-700 mb-1">Confirm Password</label>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="c_password"
+                name="c_password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 pr-10"
+                placeholder="Confirm your password"
+                value={values.c_password}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
-              <button 
-                type="button" 
-                onClick={handleLock} 
-                className='absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer'
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-2.5 text-gray-500 cursor-pointer"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75M6.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-              </button>
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </span>
             </div>
-            {errors.c_password && touched.c_password && <p className='text-red-500 text-xs absolute -bottom-5'>{errors.c_password}</p>}
+            {errors.c_password && touched.c_password && (
+              <p className="text-red-500 text-sm mt-1">{errors.c_password}</p>
+            )}
           </div>
-          <p>Already have an account ? <NavLink to={'/login'} className={'text-gray-800'} >Login</NavLink></p>
+
           {/* Submit Button */}
-          <div className='flex justify-center pt-4'>
-            <button type="submit" className='w-full md:w-[150px] h-12 bg-[#346ca1] text-white rounded-3xl hover:bg-[#2a5888] transition-colors'>
-              Sign up
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        {/* Redirect to Login */}
+        <div className="mt-4 text-center">
+          <p className="text-gray-600">
+            Already have an account?{' '}
+            <NavLink to="/login" className="text-blue-600 hover:text-blue-800">
+              Login
+            </NavLink>
+          </p>
         </div>
-      </form>
-    </div>
-     
+      </div>
     </div>
   );
 };
