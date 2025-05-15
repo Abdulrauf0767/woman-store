@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 const DeliveryInformation = () => {
     const dispatch = useDispatch();
     const deliveryItems = useSelector((state) => state.cardData.delivery);
-
     const calculateTotal = () => {
         return deliveryItems.reduce(
             (total, item) => total + (item.price * item.quantity),
@@ -212,7 +211,9 @@ const DeliveryInformation = () => {
                     </div>
                 </div>
             )}
-            <Footer />
+            <div className='pt-20'>
+            <Footer/>
+            </div>
         </div>
     );
 };
