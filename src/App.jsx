@@ -13,6 +13,7 @@ import Child from './Pages/Child';
 import Brands from './Pages/Brands';
 import Admin from './Pages/Admin';
 import ShopOwner from './Pages/ShopOwner';
+import Otp from './Components/Otp';
 const App = () => {
   return (
     <div>
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/brands' element = {<Brands/>} />
         <Route path='/admin' element = {<Admin/>} />
         <Route path='/shopowner' element = {<ShopOwner/>} />
+        <Route path='/otp' element = {<Otp/>} />
       </Routes>
     </div>
   )

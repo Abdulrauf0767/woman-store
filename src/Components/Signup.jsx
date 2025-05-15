@@ -4,11 +4,10 @@ import background from '/Images/woman-img-02.jpg';
 import { validation } from '../Validations/Validation';
 import { useFormik } from "formik";
 import { Eye, EyeOff } from 'lucide-react'; 
-
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-
+ const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(prev => !prev);
   };
@@ -24,6 +23,7 @@ const Signup = () => {
   } = useFormik({
     initialValues: {
       f_name: '',
+      l_name: '',
       email: '',
       password: '',
       c_password: ''
@@ -31,9 +31,9 @@ const Signup = () => {
     validationSchema: validation,
     onSubmit: (values) => {
       console.log(values);
-      setSuccessMessage('Your account created successfully ✅');
       handleReset();
-      setTimeout(() => setSuccessMessage(''), 3000);
+      navigate('/otp')
+     
     }
   });
 
@@ -47,11 +47,7 @@ const Signup = () => {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {successMessage && (
-        <div className="absolute top-5 px-6 py-3 bg-green-500 text-white font-semibold rounded shadow text-sm md:text-base z-50">
-          {successMessage}
-        </div>
-      )}
+    
       <div className="absolute inset-0 bg-black/25 backdrop-blur-sm z-0" />
 
       <div className="relative z-10 bg-white bg-opacity-90 p-8 rounded-lg shadow-md w-[90%] max-w-md">
@@ -73,6 +69,22 @@ const Signup = () => {
             />
             {errors.f_name && touched.f_name && (
               <p className="text-red-500 text-sm mt-1">{errors.f_name}</p>
+            )}
+          </div>
+          <div>
+            <label htmlFor="l_name" className="block text-gray-700 mb-1">Last Name</label>
+            <input
+              type="text"
+              id="l_name"
+              name="l_name"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your last name"
+              value={values.l_name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {errors.l_name && touched.l_name && (
+              <p className="text-red-500 text-sm mt-1">{errors.l_name}</p>
             )}
           </div>
 
