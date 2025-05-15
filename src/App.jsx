@@ -14,6 +14,7 @@ import Brands from './Pages/Brands';
 import Admin from './Pages/Admin';
 import ShopOwner from './Pages/ShopOwner';
 import Otp from './Components/Otp';
+import DeliveryInformation from './Pages/DeliveryInformation';
 const App = () => {
   return (
     <div>
@@ -32,6 +33,7 @@ const App = () => {
         <Route path='/admin' element = {<Admin/>} />
         <Route path='/shopowner' element = {<ShopOwner/>} />
         <Route path='/otp' element = {<Otp/>} />
+        <Route path='/delivery' element = {<DeliveryInformation/>} />
       </Routes>
     </div>
   )

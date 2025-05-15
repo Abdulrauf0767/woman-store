@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { 
   removeFromCart, 
   incrementQuantity, 
   decrementQuantity, 
-  clearCart 
+  clearCart ,
+  moveCartToDelivery
 } from '../Features/CardDataSlice';
 
 const AddToCart = () => {
@@ -17,6 +19,11 @@ const AddToCart = () => {
       0
     );
   };
+  const navigate = useNavigate() ;
+  const handleDelivery = () => {
+    dispatch(moveCartToDelivery())
+    navigate("/delivery")
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 w-[90%] justify-self-center">
@@ -102,7 +109,7 @@ const AddToCart = () => {
                 <span>Total</span>
                 <span>${calculateTotal().toFixed(2)}</span>
               </div>
-              <button className="w-full mt-6 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200">
+              <button onClick={() => handleDelivery()} className="w-full mt-6 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200">
                 Proceed to Checkout
               </button>
             </div>
