@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Slider = () => {
+  const navigate = useNavigate();
+
   const images = [
-    "/Images/woman-img-01.jpg",
-    "/Images/woman-img-02.jpg",
-    "/Images/woman-img.jpg",
+    { img: '/Images/woman-img-01.jpg', path: '/woman' },
+    { img: '/Images/woman-img-02.jpg', path: '/woman' },
+    { img: '/Images/woman-img.jpg', path: '/brandscd' },
   ];
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -22,16 +26,21 @@ const Slider = () => {
     setCurrentIndex(index);
   };
 
+  const handleClick = () => {
+    navigate(images[currentIndex].path);
+  };
+
   return (
     <div className="relative overflow-hidden w-[90%] mx-auto mt-10">
       <div
-        className="flex transition-transform duration-700 ease-in-out"
+        className="flex transition-transform duration-700 ease-in-out cursor-pointer"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        onClick={handleClick}
       >
-        {images.map((img, index) => (
+        {images.map((item, index) => (
           <img
             key={index}
-            src={img}
+            src={item.img}
             alt={`slide-${index}`}
             className="w-full md:h-[40vw] h-[60vw] object-cover flex-shrink-0"
           />

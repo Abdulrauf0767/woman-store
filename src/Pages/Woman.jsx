@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Header from "../Components/Header";
 import { useSelector, useDispatch } from "react-redux";
 import { categoryData } from '../Features/CardDataSlice';
@@ -14,6 +14,10 @@ const Woman = () => {
       dispatch(categoryData());
     }
   }, [dispatch, status]);
+
+  const filteredProducts = useMemo(() => {
+    return dataProduct.filter((p) => p.category === 'women');
+  }, [dataProduct]);
 
   if (status === 'idle' || status === 'pending') {
     return (
@@ -36,8 +40,6 @@ const Woman = () => {
       </div>
     );
   }
-
-  const filteredProducts = dataProduct.filter((p) => p.category === 'women');
 
   return (
     <div className='w-[90%] mx-auto'>

@@ -9,7 +9,6 @@ const Cards = () => {
   const jsonData = useSelector((state) => state.cardData.categoryList?.productList || []);
   const status = useSelector((state) => state.cardData.status);
   const error = useSelector((state) => state.cardData.error);
-
   useEffect(() => {
     if (status === 'idle') {
       dispatch(dataFetch());

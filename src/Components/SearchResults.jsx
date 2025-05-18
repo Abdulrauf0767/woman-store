@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const SearchResults = () => {
   const { filteredList, searchTerm } = useSelector((state) => state.cardData);
-
   return (
     <div className="container mx-auto w-[90%]">
       <h1 className="text-2xl font-title mt-6 text-center">

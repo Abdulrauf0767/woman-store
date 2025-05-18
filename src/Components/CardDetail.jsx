@@ -79,13 +79,13 @@ const CardDetail = () => {
                 <div className='md:w-[50%] w-full flex flex-col'>
                     <div
                         className='w-full h-[500px] shadow-md rounded-xl flex items-center justify-center bg-white relative overflow-hidden'
-                        onMouseEnter={() => setIsZoomVisible(true)}
-                        onMouseLeave={() => setIsZoomVisible(false)}
-                        onMouseMove={handleMouseMove}
                     >
                         <img 
                             src={product.image || '/placeholder-image.jpg'} 
                             alt={product.title}
+                            onMouseEnter={() => setIsZoomVisible(true)}
+                            onMouseLeave={() => setIsZoomVisible(false)}
+                            onMouseMove={handleMouseMove}
                             className='max-w-[100%] max-h-[100%] object-contain z-10'
                             onError={(e) => {
                                 e.target.onerror = null;
