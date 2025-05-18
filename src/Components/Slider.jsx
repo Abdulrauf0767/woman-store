@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion'; 
 
 const Slider = () => {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const Slider = () => {
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
-
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -32,19 +32,21 @@ const Slider = () => {
 
   return (
     <div className="relative overflow-hidden w-[90%] mx-auto mt-10">
-      <div
-        className="flex transition-transform duration-700 ease-in-out cursor-pointer"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        onClick={handleClick}
-      >
-        {images.map((item, index) => (
-          <img
-            key={index}
-            src={item.img}
-            alt={`slide-${index}`}
-            className="w-full md:h-[40vw] h-[60vw] object-cover flex-shrink-0"
-          />
-        ))}
+      <div onClick={handleClick} className="cursor-pointer">
+        <motion.div
+          className="flex"
+          animate={{ x: `-${currentIndex * 100}%` }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+        >
+          {images.map((item, index) => (
+            <img
+              key={index}
+              src={item.img}
+              alt={`slide-${index}`}
+              className="w-full md:h-[40vw] h-[60vw] object-cover flex-shrink-0"
+            />
+          ))}
+        </motion.div>
       </div>
 
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-x-3">
