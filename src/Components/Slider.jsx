@@ -22,7 +22,7 @@ const Slider = () => {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const handleImages = (index) => {
+  const handleImages = (index) => {z
     setCurrentIndex(index);
   };
 

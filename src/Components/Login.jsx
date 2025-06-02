@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import bg from '/Images/woman-img-02.jpg';
 import { DummyUser } from '../../public/DummyUser';
+import { useDispatch } from 'react-redux';
+import { login } from '../Features/AuthSlice';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ const Login = () => {
     );
 
     if (matchedUser) {
-      localStorage.setItem('user', JSON.stringify(matchedUser));
+      dispatch(login(matchedUser));
       navigate(`/${matchedUser.role}`);
     } else {
       setError('Invalid username or password');
@@ -35,10 +38,8 @@ const Login = () => {
       }}
     >
       <div className="absolute inset-0 bg-black/25 backdrop-blur-sm z-0" />
-
-      <div className="relative z-10 bg-white  p-8 rounded-lg shadow-md w-[90%] max-w-md">
+      <div className="relative z-10 bg-white p-8 rounded-lg shadow-md w-[90%] max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6">LOGIN</h1>
-
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label htmlFor="username" className="block text-gray-700 mb-2">
@@ -54,7 +55,6 @@ const Login = () => {
               required
             />
           </div>
-
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700 mb-2">
               Password
@@ -69,40 +69,21 @@ const Login = () => {
               required
             />
           </div>
-
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="remember"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="remember" className="ml-2 block text-gray-700">
-                Remember me
-              </label>
-            </div>
-            <a href="#" className="text-blue-600 hover:text-blue-800">
-              Forgot Password?
-            </a>
-          </div>
-
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
           >
             Login
           </button>
         </form>
-
         <div className="mt-4 text-center">
           <p className="text-gray-600">
             Don't have an account?{' '}
-            <NavLink to={'/signup'} className="text-blue-600 hover:text-blue-800">
+            <NavLink to="/signup" className="text-blue-600 hover:text-blue-800">
               Sign Up
             </NavLink>
           </p>
         </div>
-
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState,useDeferredValue, useMemo } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchTerm, clearSearch } from '../Features/CardDataSlice';
@@ -8,6 +8,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchbar, setIsSearchbar] = useState(false);
   const [localSearchTerm, setLocalSearchTerm] = useState('');
+  const defferdValue = useDeferredValue(localSearchTerm) ;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ const Header = () => {
   const handleBrand = () => navigate('/brands');
 
   const handleSearchChange = (e) => {
-    const value = e.target.value;
+    const value  = e.target.value 
     setLocalSearchTerm(value);
     dispatch(setSearchTerm(value));
   };
